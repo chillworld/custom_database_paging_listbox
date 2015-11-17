@@ -1,0 +1,15 @@
+If you want to use your own tag.
+
+Open WEB-INF/lang-addon.xml
+
+Add the following under the <language-addon>
+
+ <component>
+    <component-name>paginglistbox</component-name>
+    <extends>idspace</extends>
+    <component-class>my.choosen.path.PagingListbox</component-class>
+</component>
+
+Then you can use in the ZUL files the tag <paginglistbox>.
+It is possible to give this another name.
+
