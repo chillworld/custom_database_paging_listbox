@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language-addon>
+    <component>
+        <component-name>paginglistbox</component-name>
+        <extends>idspace</extends>
+        <component-class>be.mil.components.PagingListbox</component-class>
+    </component>
+</language-addon>
