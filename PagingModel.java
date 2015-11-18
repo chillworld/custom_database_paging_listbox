@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -26,8 +26,8 @@ public class PagingModel<T> {
         this.sortDirection = sortDirection == null ? SortDirection.ASCENDING : sortDirection;
     }
 
-    public List<T> getPage(int activePage, int pageSize) {
-        return pagingModelRequest.getPage(activePage, pageSize, sortField, sortDirection);
+    public Collection<T> getContent(int activePage, int pageSize) {
+        return pagingModelRequest.getContent(activePage, pageSize, sortField, sortDirection);
     }
 
     public long getTotalSize() {
