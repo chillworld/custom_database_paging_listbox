@@ -1,5 +1,6 @@
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,6 @@ import org.zkoss.zul.event.PagingEvent;
 @ComponentAnnotation({"selectedItems:@ZKBIND(ACCESS=both,SAVE_EVENT=onSelect)",
     "selectedItem:@ZKBIND(ACCESS=both,SAVE_EVENT=onSelect)"})
 public class PagingListbox extends Idspace implements AfterCompose {
-
     private String pagingPosition = "top";
     private String emptyMessage = "";
     private String template = null;
@@ -121,7 +121,7 @@ public class PagingListbox extends Idspace implements AfterCompose {
         if (pagers != null && listbox != null && pagingModel != null) {
             setPagersVisible();
             listbox.setCheckmark(checkmark);
-            List page = pagingModel.getPage(activePage, pageSize);
+            Collection page = pagingModel.getContent(activePage, pageSize);
             for (Paging paging : pagers) {
                 paging.setDetailed(detailed);
                 paging.setActivePage(activePage);
@@ -271,5 +271,4 @@ public class PagingListbox extends Idspace implements AfterCompose {
     public void setDetailed(boolean detailed) {
         this.detailed = detailed;
     }
-
 }
