@@ -1,12 +1,12 @@
 package be.mil.components;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  *
  * @author cossaer.f
  */
 public interface PagingModelRequest<T> {
-    List<T> getPage(int activePage, int pageSize, String sortField, SortDirection sortDirection);
+    Collection<T> getContent(int activePage, int pageSize, String sortField, SortDirection sortDirection);
     long getTotalSize();
 }
