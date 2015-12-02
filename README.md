@@ -1,6 +1,8 @@
 # custom database paging listbox
 Custom listbox for easy database paging
 
+Please read [this small ](http://books.zkoss.org/wiki/Small_Talks/2015/December/custom_database_paging_listbox)talk on how to use the component.
+
 Donations are always welcome, but certainly not obligated.<br/>
 I like to help people where I can and share code.<br/>
 
