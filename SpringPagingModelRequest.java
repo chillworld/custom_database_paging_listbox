@@ -1,3 +1,6 @@
+import be.chillworld.model.SortDirection;
+import be.chillworld.request.CurrentPageExceedException;
+import be.chillworld.request.PagingModelRequest;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
@@ -30,7 +33,7 @@ public abstract class SpringPagingModelRequest implements PagingModelRequest {
     private long totalSize;
 
     @Override
-    public List getContent(int activePage, int pageSize, String sortField, SortDirection sortDirection) {
+    public List getContent(int activePage, int pageSize, String sortField, SortDirection sortDirection) throws CurrentPageExceedException {
         PageRequest request;
         Sort.Direction direction;
         if (sortDirection != null) {
@@ -47,8 +50,11 @@ public abstract class SpringPagingModelRequest implements PagingModelRequest {
         } else {
             request = new PageRequest(activePage, pageSize);
         }
+        // bug fix when usage with filters and currentPage is larger then totalpages.
         Page page = getPage(request);
-        totalSize = page.getTotalElements();
+        if (page.getTotalPages()<activePage) {
+            throw new CurrentPageExceedException();
+        }
         return page.getContent();
     }
 
