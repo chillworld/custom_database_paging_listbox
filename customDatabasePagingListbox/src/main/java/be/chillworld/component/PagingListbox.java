@@ -2,14 +2,16 @@ package be.chillworld.component;
 
 import be.chillworld.model.PagingModel;
 import be.chillworld.model.SortDirection;
+import be.chillworld.request.CurrentPageExceedException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Components;
 import org.zkoss.zk.ui.annotation.ComponentAnnotation;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -34,6 +36,7 @@ import org.zkoss.zul.event.PagingEvent;
 @ComponentAnnotation({"selectedItems:@ZKBIND(ACCESS=both,SAVE_EVENT=onSelect)",
     "selectedItem:@ZKBIND(ACCESS=both,SAVE_EVENT=onSelect)"})
 public class PagingListbox extends Idspace implements AfterCompose {
+
     private String pagingPosition = "top";
     private String emptyMessage = "";
     private String template = null;
@@ -125,7 +128,19 @@ public class PagingListbox extends Idspace implements AfterCompose {
         if (pagers != null && listbox != null && pagingModel != null) {
             setPagersVisible();
             listbox.setCheckmark(checkmark);
-            Collection page = pagingModel.getContent(activePage, pageSize);
+            Collection page = new ArrayList();
+            try {
+                page = pagingModel.getContent(activePage, pageSize);
+            } catch (CurrentPageExceedException ex) {
+                activePage = 0;
+                for (Paging paging : pagers) {
+                    paging.setActivePage(activePage);
+                }
+                try {
+                    page = pagingModel.getContent(activePage, pageSize);
+                } catch (CurrentPageExceedException ex1) {
+                }
+            }
             for (Paging paging : pagers) {
                 paging.setDetailed(detailed);
                 paging.setActivePage(activePage);
