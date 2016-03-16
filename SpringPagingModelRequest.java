@@ -55,6 +55,7 @@ public abstract class SpringPagingModelRequest implements PagingModelRequest {
         if (page.getTotalPages()<activePage) {
             throw new CurrentPageExceedException();
         }
+        totalSize = page.getTotalElements();
         return page.getContent();
     }
 
